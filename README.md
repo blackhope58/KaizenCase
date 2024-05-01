@@ -7,9 +7,13 @@ https://github.com/blackhope58/KaizenCase/assets/93086334/a0cff91f-1584-404a-913
 
 # Installation
 
-- git clone https://github.com/blackhope58/KaizenCase.git
-- yarn or npm installation
-- yarn iphone or yarn android
+```bash
+git clone https://github.com/blackhope58/KaizenCase.git
+yarn or npm installation
+yarn iphone or yarn android
+```
+
+
 
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
