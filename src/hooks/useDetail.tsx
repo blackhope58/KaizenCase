@@ -1,19 +1,17 @@
 import {useEffect, useState} from 'react';
 import {useAxios} from '../services/useAxios';
-import {TagListProps} from '../types/HomeTypes';
+import {PromotionCardProps} from '../types/HomeTypes';
 
 const useDetail = ({id}: {id: number}) => {
-  const [detailData, setDetailData] = useState<any>([]);
-  console.log(id);
-
-  const prepareTagsListData = async () => {
-    const data = await useAxios(`promotions?Id=${id}`, 'GET');
-    setDetailData(data);
+  const [detailData, setDetailData] = useState<PromotionCardProps[]>([]);
+  const prepareDetailData = async () => {
+    const response = await useAxios(`promotions?Id=${id}`, 'GET');
+    setDetailData(response);
   };
 
   useEffect(() => {
-    prepareTagsListData();
-  }, []);
+    prepareDetailData();
+  }, [id]);
 
   return {detailData};
 };

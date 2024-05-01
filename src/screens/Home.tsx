@@ -1,12 +1,11 @@
 import {
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import {colors} from '../utils/colors';
@@ -16,12 +15,15 @@ import {screenHeight, screenWidth} from '../utils/uiHelper';
 import Carousel from 'react-native-reanimated-carousel';
 import RenderHTML from 'react-native-render-html';
 import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {NavigationParams} from '../types/NavigationTypes';
 
 const Home = () => {
   const {tagsList, promotions} = useHome();
-  const navigation = useNavigation<any>();
-  const [selectedFilter, setSelectedFilter] = React.useState(-1);
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [selectedFilter, setSelectedFilter] = useState(-1);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<NavigationParams>>();
 
   const Header = () => {
     return (
@@ -81,29 +83,23 @@ const Home = () => {
     const handleDate = (date: string) => {
       const tarihStr = date;
       const [gun, ay, yil] = tarihStr.split('.');
-      const girisTarihi = new Date(`${yil}-${ay}-${gun}`);
-      const simdikiTarih = new Date();
+      const girisTarihi = Number(new Date(`${yil}-${ay}-${gun}`));
+      const simdikiTarih = Number(new Date());
       const kalanGunSayisi = Math.ceil(
         (girisTarihi - simdikiTarih) / (1000 * 60 * 60 * 24),
       );
       return kalanGunSayisi;
     };
 
-    const goDetailScreen = (item: any) => {
+    const goDetailScreen = (item: PromotionCardProps) => {
       navigation.navigate('Detail', {item});
     };
 
     const renderItem = ({item}: {item: PromotionCardProps}) => {
       return (
-        <View
-          style={{
-            alignItems: 'center',
-          }}>
+        <View style={styles.renderItemContainer}>
           <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={styles.mainSliderButton}
             activeOpacity={0.7}
             onPress={() => {
               goDetailScreen(item);
@@ -185,7 +181,7 @@ const Home = () => {
   const PagingDots = () => {
     return (
       <View style={{flexDirection: 'row'}}>
-        {promotions.map((_, index) => (
+        {promotions.map((item: {item: PromotionCardProps}, index: number) => (
           <View
             key={index}
             style={{
@@ -371,5 +367,12 @@ const styles = StyleSheet.create({
     bottom: -14,
     borderRadius: 999,
     transform: [{rotate: '3deg'}],
+  },
+  renderItemContainer: {
+    alignItems: 'center',
+  },
+  mainSliderButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

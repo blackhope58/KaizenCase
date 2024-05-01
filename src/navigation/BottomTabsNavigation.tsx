@@ -2,7 +2,6 @@ import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Text from '../components/Text';
 import {colors} from '../utils/colors';
 import Wallet from '../screens/Wallet';
@@ -11,8 +10,6 @@ import Daha from '../screens/Daha';
 const Tab = createBottomTabNavigator();
 
 const BottomTabsNavigation = () => {
-  const insets = useSafeAreaInsets();
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -53,23 +50,14 @@ const BottomTabsNavigation = () => {
         component={Daha}
         options={{
           tabBarIcon: ({focused}) => (
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 84,
-                height: 84,
-                top: -20,
-                backgroundColor: colors.white,
-                borderRadius: 99,
-              }}>
+            <View style={styles.dahaContainer}>
               <Image
                 source={require('../assets/icons/dahaBorder.png')}
-                style={{width: 84, height: 84}}
+                style={styles.dahaBorder}
               />
               <Image
                 source={require('../assets/icons/dahaLogo.png')}
-                style={{width: 40, height: 40, position: 'absolute', top: 16}}
+                style={styles.dahaLogo}
               />
             </View>
           ),
@@ -142,4 +130,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
+  dahaContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 84,
+    height: 84,
+    top: -20,
+    backgroundColor: colors.white,
+    borderRadius: 99,
+  },
+  dahaBorder: {width: 84, height: 84},
+  dahaLogo: {width: 40, height: 40, position: 'absolute', top: 16},
 });

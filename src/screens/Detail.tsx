@@ -8,16 +8,23 @@ import {
 import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import useDetail from '../hooks/useDetail';
-import {DetailProps} from '../types/HomeTypes';
+import {DetailProps, PromotionCardProps} from '../types/HomeTypes';
 import {screenWidth} from '../utils/uiHelper';
 import {colors} from '../utils/colors';
 import RenderHTML from 'react-native-render-html';
 import Text from '../components/Text';
 import LinearGradient from 'react-native-linear-gradient';
 
-const Detail = () => {
-  const {params} = useRoute();
-  const id = params.item.Id;
+interface Props {
+  route: {
+    params: {
+      item: PromotionCardProps;
+    };
+  };
+}
+
+const Detail = ({route}: Props) => {
+  const id = route.params.item.Id;
   const {detailData}: {detailData: DetailProps} = useDetail({id});
   const navigation = useNavigation();
 
@@ -28,8 +35,8 @@ const Detail = () => {
   const handleDate = (date: string) => {
     const tarihStr = date;
     const [gun, ay, yil] = tarihStr.split('.');
-    const girisTarihi = new Date(`${yil}-${ay}-${gun}`);
-    const simdikiTarih = new Date();
+    const girisTarihi = Number(new Date(`${yil}-${ay}-${gun}`));
+    const simdikiTarih = Number(new Date());
     const kalanGunSayisi = Math.ceil(
       (girisTarihi - simdikiTarih) / (1000 * 60 * 60 * 24),
     );

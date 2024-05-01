@@ -1,25 +1,10 @@
 import axios, {AxiosRequestConfig} from 'axios';
+import {PromotionCardProps} from '../types/HomeTypes';
 
 const baseURL = 'https://api.extrazone.com';
 
-type User = {
-  email?: string;
-  isPremium?: number;
-  name?: string;
-  premiumExpirationDate?: null;
-  premiumStartDate?: null;
-  surname?: string;
-  userId?: string;
-  verified?: number;
-  version?: number;
-};
 interface ApiResponse {
-  status: number;
-  error?: string;
-  access_token?: string;
-  message?: string;
-  storyData?: any;
-  user?: User;
+  data: PromotionCardProps[];
 }
 
 const instance = axios.create({
@@ -49,9 +34,6 @@ export const useAxios = async (
     };
     return (await instance(config)).data;
   } catch (error: any) {
-    return {
-      status: error.response?.status || 500,
-      error: error.response?.data?.error || 'Bilinmeyen Hata',
-    };
+    console.log(error);
   }
 };
