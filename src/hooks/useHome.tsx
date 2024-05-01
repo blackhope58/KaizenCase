@@ -1,17 +1,27 @@
 import {useEffect, useState} from 'react';
 import {useAxios} from '../services/useAxios';
+import {TagListProps} from '../types/HomeTypes';
 
 const useHome = () => {
-  const [data, setData] = useState<any>([]);
-  const prepareData = async () => {
+  const [tagsListData, setTagsListData] = useState<any>([]);
+  const [promotionsData, setPromotionsData] = useState<any>([]);
+
+  const prepareTagsListData = async () => {
     const data = await useAxios('tags/list', 'GET');
-    setData(data);
+    setTagsListData(data);
   };
+
+  const preparePromotionsData = async () => {
+    const data = await useAxios('promotions/list?Channel=PWA', 'GET');
+    setPromotionsData(data);
+  };
+
   useEffect(() => {
-    prepareData();
+    prepareTagsListData();
+    preparePromotionsData();
   }, []);
 
-  return {tagsList: data};
+  return {tagsList: tagsListData, promotions: promotionsData};
 };
 
 export default useHome;
