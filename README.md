@@ -1,8 +1,10 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 
 https://github.com/blackhope58/KaizenCase/assets/93086334/a0cff91f-1584-404a-9134-80902642cc90
 
+
+
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
 
